@@ -193,20 +193,24 @@ def main():
             from legacyhalos.mpi import call_custom_coadds
 
             samplefile = os.path.join(galaxydir, '{}-sample.fits'.format(galaxy))
+            coadd_is_done_file = os.path.join(galaxydir, '{}-custom-coadds.isdone'.format(galaxy))
             if args.clobber or not os.path.isfile(samplefile):
                 tmpfile = samplefile+'.tmp'
                 Table(onegal).write(tmpfile, overwrite=True, format='fits')
                 os.rename(tmpfile, samplefile)
             
-            call_custom_coadds(onegal, galaxy, survey, run, radius_mosaic_arcsec, nproc=args.nproc,
-                               pixscale=args.pixscale, racolumn=RACOLUMN, deccolumn=DECCOLUMN,
-                               custom=True,
-                               apodize=False, unwise=args.unwise, force=args.force, plots=False,
-                               verbose=args.verbose, cleanup=args.cleanup, write_all_pickles=True,
-                               subsky_radii=subsky_radii,
-                               just_coadds=args.just_coadds, no_gaia=False, no_tycho=False,
-                               require_grz=True, debug=args.debug, logfile=logfile,
-                               write_wise_psf=False)
+            if args.clobber or not os.path.isfile(coadd_is_done_file):
+                call_custom_coadds(onegal, galaxy, survey, run, radius_mosaic_arcsec, nproc=args.nproc,
+                                pixscale=args.pixscale, racolumn=RACOLUMN, deccolumn=DECCOLUMN,
+                                custom=True,
+                                apodize=False, unwise=args.unwise, force=args.force, plots=False,
+                                verbose=args.verbose, cleanup=args.cleanup, write_all_pickles=True,
+                                subsky_radii=subsky_radii,
+                                just_coadds=args.just_coadds, no_gaia=False, no_tycho=False,
+                                require_grz=True, debug=args.debug, logfile=logfile,
+                                write_wise_psf=False)
+            else:
+                print("{} coadd is done. Skipping it.".format(galaxy))
 
         if args.pipeline_coadds:
             from legacyhalos.mpi import call_custom_coadds
