@@ -17,7 +17,9 @@ stage=$1
 ncores=$2
 
 # source /global/cfs/projectdirs/desi/users/zhouc/desi_lsb/decals_lsb/forked_repos/legacyhalos/bin/legacybgs/legacybgs-env
-export LEGACYHALOS_CODE_DIR="/global/cfs/projectdirs/desi/users/zhouc/desi_lsb/decals_lsb/forked_repos/legacyhalos"
+export LEGACYHALOS_CODE_DIR="${LEGACYHALOS_CODE_DIR:-/global/cfs/projectdirs/m1727/cgibson/repos/legacyhalos}"
+
+# export LEGACYHALOS_CODE_DIR="/global/cfs/projectdirs/desi/users/zhouc/desi_lsb/decals_lsb/forked_repos/legacyhalos"
 
 echo "Starting the legacybgs mpi script"
 echo "LEGACYHALOS_CODE_DIR = "$LEGACYHALOS_CODE_DIR
